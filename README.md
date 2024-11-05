@@ -33,7 +33,7 @@ npm run dev
 ### Installation with Docker
 Build the image
 ```bash
-docker build -t viewcomfy https://github.com/ViewComfy/ViewComfy.git#main
+docker build -t viewcomfy https://github.com/veka-server/ViewComfy.git#main
 ```
 Run the container
 ```bash
