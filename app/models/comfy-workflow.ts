@@ -78,6 +78,8 @@ export class ComfyWorkflow {
             method: 'POST',
             body: formData
         });
+
+        console.log(response);
     
         if (!response.ok) {
             throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
