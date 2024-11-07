@@ -62,7 +62,7 @@ export class ComfyWorkflow {
     }
 
     private async createFileFromInput(file: File) {
-        return 'yutruytf';
+
         
         const fileName = `${this.getFileNamePrefix()}${file.name}`;
         const filePath = path.join(COMFY_INPUTS_DIR, fileName);
@@ -84,6 +84,8 @@ export class ComfyWorkflow {
         console.log(response);
         const filePathlog = path.join(COMFY_INPUTS_DIR, `log`);
         await fs.writeFile(filePathlog, JSON.stringify(response));
+
+                    throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
 
         if (!response.ok) {
             throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
