@@ -62,6 +62,8 @@ export class ComfyWorkflow {
     }
 
     private async createFileFromInput(file: File) {
+        return 'yutruytf';
+        
         const fileName = `${this.getFileNamePrefix()}${file.name}`;
         const filePath = path.join(COMFY_INPUTS_DIR, fileName);
         const fileBuffer = await file.arrayBuffer();
