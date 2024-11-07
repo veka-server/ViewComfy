@@ -62,14 +62,15 @@ export class ComfyWorkflow {
     }
 
     private async createFileFromInput(file: File) {
-
         
         const fileName = `${this.getFileNamePrefix()}${file.name}`;
         const filePath = path.join(COMFY_INPUTS_DIR, fileName);
         const fileBuffer = await file.arrayBuffer();
         await fs.writeFile(filePath, Buffer.from(fileBuffer));
-
-    
+   
+// Définir les permissions à 777
+await fs.chmod(filePath, 0o777);
+        
         // Préparer les données pour l'upload vers l'API
         const formData = new FormData();
         formData.append("file", new Blob([fileBuffer]), fileName);
