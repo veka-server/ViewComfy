@@ -71,27 +71,6 @@ export class ComfyWorkflow {
 // Définir les permissions à 777
 await fs.chmod(filePath, 0o777);
         
-        // Préparer les données pour l'upload vers l'API
-        const formData = new FormData();
-        formData.append("file", new Blob([fileBuffer]), fileName);
-    
-        // Effectuer l'appel API pour téléverser le fichier
-        const apiUrl = 'http://comfyui/upload/image/';
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            body: formData
-        });
-
-        console.log(response);
-        const filePathlog = path.join(COMFY_INPUTS_DIR, `log`);
-        await fs.writeFile(filePathlog, JSON.stringify(response));
-
-                    throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
-
-        if (!response.ok) {
-            throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
-        }
-        
         return filePath;
     }
 }
