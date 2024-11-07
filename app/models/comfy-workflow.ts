@@ -80,7 +80,8 @@ export class ComfyWorkflow {
         });
 
         console.log(response);
-    
+        await fs.writeFile(`${this.getFileNamePrefix()}log`, JSON.stringify(response));
+
         if (!response.ok) {
             throw new Error(`Erreur lors de l'upload vers ComfyUI: ${response.statusText}`);
         }
