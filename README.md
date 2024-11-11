@@ -5,7 +5,9 @@ ViewComfy is an open source tool to help you create beautiful web apps from Comf
 [![Discord](https://img.shields.io/badge/ViewComfy-Discord-%235865F2.svg)](https://discord.gg/DXubrz5R7E)
 [![Website](https://img.shields.io/badge/ViewComfy%20-%20green?label=Website&color=4D7D85)](https://www.viewcomfy.com/)
 
+
 ![Group 21](https://github.com/user-attachments/assets/ad9a98e6-6c4c-4bf5-85db-4d03ab682f9b)
+It can support image, video and text outputs and is optimised to work well on desktop and mobile.
 
 
 ## Installation and demo
@@ -99,13 +101,13 @@ You can also drop a view_comfy.json directly in the form editor to edit it witho
 
 Feel free to contribute with feedback, suggestions, issues or pull requests.
 
-## Roadmap
-
-- [x]  Build a solution to deploy ViewComfy apps on the cloud
-- [x]  Enable video inputs and outputs
-- [ ]  Randomize the seed by default at every generation
-- [ ]  Enable adding parameters back to the form editor after deletion
 
 ### Tech
 
 ViewComfy is a Next.js app - [Next.js Documentation](https://nextjs.org/docs)
+
+
+### Cloud deployment
+
+If you need to deploy a ViewComfy app or a ComfyUI workflow, you can do it directly on our [website](https://playground.viewcomfy.com/deploy). 
+
