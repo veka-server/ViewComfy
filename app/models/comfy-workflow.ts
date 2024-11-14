@@ -39,10 +39,30 @@ export class ComfyWorkflow {
             }
         }
         for (const key in this.workflow) {
-            if (this.workflow[key].class_type === "SaveImage" || this.workflow[key].class_type === "VHS_VideoCombine") {
-                this.workflow[key].inputs.filename_prefix = this.getFileNamePrefix();
+
+            let node = this.workflow[key];
+
+            switch(node.class_type) {
+
+                case "SaveImage":
+                case "VHS_VideoCombine":
+                    node.inputs.filename_prefix = this.getFileNamePrefix();
+                    break;
+
+                case "KSampler":
+                case "RandomNoise":
+                default:
+                    node.inputs.each(() => {
+                        /*
+                        const minCeiled = Math.ceil(0);
+                        const maxFloored = Math.floor(2**32);
+                        node.inputs.seed = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
+*/
+                        console.log(this)
+                    });                   
+
             }
-            console.log(this.workflow[key])
+
         }
     }
 
