@@ -59,7 +59,7 @@ export class ComfyWorkflow {
                 default:
                     Object.keys(node.inputs).forEach((key) => {
                         if(["seed", "noise_seed", "rand_seed"].includes(key)) {
-                            node.inputs[key].value = newSeed; 
+                            node.inputs[key] = newSeed; 
                         }                        
                     });
             }
