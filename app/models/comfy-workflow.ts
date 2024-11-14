@@ -52,14 +52,14 @@ export class ComfyWorkflow {
                 case "KSampler":
                 case "RandomNoise":
                 default:
-                    node.inputs.each(() => {
+                    node.forEach((seed) => {
+                      console.log(`Processing seed: ${seed}`);
+                    });
                         /*
                         const minCeiled = Math.ceil(0);
                         const maxFloored = Math.floor(2**32);
                         node.inputs.seed = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
 */
-                        console.log(this)
-                    });                   
 
             }
 
