@@ -52,7 +52,10 @@ export class ComfyWorkflow {
                 case "KSampler":
                 case "RandomNoise":
                 default:
-                    node.forEach((seed) => {
+                    Object.keys(node.inputs).forEach((key) => {
+                      console.log(`Key: ${key}, Value: ${node[key as keyof typeof node]}`);
+                    });
+                    node.inputs.forEach((seed) => {
                       console.log(`Processing seed: ${seed}`);
                     });
                         /*
