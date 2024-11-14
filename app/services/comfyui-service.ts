@@ -124,4 +124,51 @@ export class ComfyUIService {
         return workflow;
     }
 
+    async uploadFile(File: file) {
+
+        try {
+    
+            const fileBuffer = await file.arrayBuffer();
+            const base64Image = Buffer.from(fileBuffer).toString('base64');
+    
+            const formData = new FormData();
+            formData.append('image', new Blob([Uint8Array.from(atob(base64Image), c => c.charCodeAt(0))], { type: 'image/png' }), fileName);
+            formData.append('type', "input");
+            formData.append('overwrite', "false");
+    
+            const response = await fetch(`http://comfyui:8188/api/upload/image`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to upload file : ${response.statusText}`);
+            }
+
+            const responseData = await response.text();
+            let json = JSON.parse(responseData);
+            return json.name; 
+    
+            // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+        } catch (error: unknown) {
+
+            if (error instanceof ComfyWorkflowError) {
+                throw error;
+            }
+
+            const comfyError =
+                this.comfyErrorHandler.tryToParseWorkflowError(error);
+            if (comfyError) {
+                throw comfyError;
+            }
+
+            throw new ComfyWorkflowError({
+                message: "Error running workflow",
+                errors: [
+                    "Something went wrong running the workflow, impossible to upload file to comfyui.",
+                ],
+            });
+        }
+    }
+
 }
