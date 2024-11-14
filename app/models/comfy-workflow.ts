@@ -42,6 +42,7 @@ export class ComfyWorkflow {
             if (this.workflow[key].class_type === "SaveImage" || this.workflow[key].class_type === "VHS_VideoCombine") {
                 this.workflow[key].inputs.filename_prefix = this.getFileNamePrefix();
             }
+            console.log(this.workflow[key])
         }
     }
 
