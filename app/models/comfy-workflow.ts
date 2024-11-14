@@ -39,9 +39,7 @@ export class ComfyWorkflow {
             }
         }
 
-        const minCeiled = Math.ceil(0);
-        const maxFloored = Math.floor(2**32);
-        const newSeed = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
+        const newSeed = this.getNewSeed();
 
         for (const key in this.workflow) {
 
@@ -65,6 +63,12 @@ export class ComfyWorkflow {
             }
 
         }
+    }
+
+    public getNewSeed() {
+        const minCeiled = Math.ceil(0);
+        const maxFloored = Math.floor(2**32);
+        return Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
     }
 
     public getWorkflow() {
