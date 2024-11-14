@@ -38,6 +38,11 @@ export class ComfyWorkflow {
                 obj[path[path.length - 1]] = input.value;
             }
         }
+
+        const minCeiled = Math.ceil(0);
+        const maxFloored = Math.floor(2**32);
+        const newSeed = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
+
         for (const key in this.workflow) {
 
             let node = this.workflow[key];
@@ -53,17 +58,10 @@ export class ComfyWorkflow {
                 case "RandomNoise":
                 default:
                     Object.keys(node.inputs).forEach((key) => {
-                      console.log(`Key: ${key}, Value: ${node[key as keyof typeof node]}`);
+                        if(key.includes(["seed", "noise_seed", "rand_seed"]) {
+                            node.inputs[key].value = newSeed; 
+                        }                        
                     });
-                    node.inputs.forEach((seed) => {
-                      console.log(`Processing seed: ${seed}`);
-                    });
-                        /*
-                        const minCeiled = Math.ceil(0);
-                        const maxFloored = Math.floor(2**32);
-                        node.inputs.seed = Math.floor(Math.random() * (maxFloored - minCeiled + 1) + minCeiled); 
-*/
-
             }
 
         }
