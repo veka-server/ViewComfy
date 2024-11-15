@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { TooltipButton } from "@/components/ui/tooltip-button"
 import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query"
+import { useState, useEffect } from "react";
 
 export enum TabValue {
     Playground = 'playground',
@@ -86,8 +87,20 @@ const SidebarButton = ({ icon, label, isActive, onClick, isSmallScreen }: { icon
 export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
-        const stats = await fetchSystemStats();
-        console.log("System Stats:", stats);
+
+    const [stats, setStats] = useState<SystemStats | null>(null);
+    useEffect(() => {
+        const fetchStats = async () => {
+            try {
+                const response = await fetchSystemStats();
+                setStats(response);
+            } catch (error) {
+                console.error("Failed to fetch system stats:", error);
+            }
+        };
+        fetchStats();
+    }, []);
+
     return (
         <aside className={`flex flex-col h-full overflow-y-auto border-r bg-background transition-all duration-300 ${isSmallScreen ? 'w-12' : 'w-48'}`}>
             <nav className="flex-grow space-y-2 p-2">
