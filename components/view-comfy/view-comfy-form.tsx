@@ -256,6 +256,8 @@ function InputFieldToUI(args: { input: IInputForm, field: any, editMode?: boolea
         )
     }
 
+    console.log(input)
+
     return (
         <FormBasicInput input={input} field={field} editMode={editMode} remove={remove} index={index} />
     )
