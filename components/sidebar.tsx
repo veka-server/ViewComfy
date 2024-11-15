@@ -140,11 +140,7 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                         <li><strong>Python :</strong> {stats.system.python_version}</li>
                         <li><strong>PyTorch :</strong> {stats.system.pytorch_version}</li>
                         <li><strong>ComfyUI :</strong> {stats.system.comfyui_version}</li>
-                        <li>
-                            <strong>GPU :</strong> {stats.devices[0]?.name} <br />
-                            VRAM Total: {Math.round(stats.devices[0]?.vram_total / 1024 / 1024 / 1024)} GB <br />
-                            VRAM Libre: {Math.round(stats.devices[0]?.vram_free / 1024 / 1024 / 1024)} GB
-                        </li>
+                        <li><strong>GPU :</strong> {stats.devices[0]?.name}</li>
                     </ul>
                 </div>
             )}
