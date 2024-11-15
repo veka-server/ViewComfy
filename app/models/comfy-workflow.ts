@@ -52,8 +52,6 @@ export class ComfyWorkflow {
                     node.inputs.filename_prefix = this.getFileNamePrefix();
                     break;
 
-                case "KSampler":
-                case "RandomNoise":
                 default:
                     Object.keys(node.inputs).forEach((key) => {
                         if(
