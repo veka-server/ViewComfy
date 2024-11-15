@@ -267,16 +267,23 @@ function InputFieldToUI(args: { input: IInputForm, field: any, editMode?: boolea
     )
 }
 
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean, remove?: UseFieldArrayRemove, index: number }) {
     const { input, field, editMode, remove, index } = args;
 
-    const [isRandomized, setIsRandomized] = useState(false); // State to manage checkbox and input behavior
+    const [isRandomized, setIsRandomized] = useState(false); // State to manage checkbox behavior
+    const [storedValue, setStoredValue] = useState(field.value); // State to preserve input value
 
     const handleCheckboxChange = (checked: boolean) => {
-        setIsRandomized(checked); // Update state
+        setIsRandomized(checked); // Update the randomized state
         if (checked) {
+            // Save the current input value before disabling it
+            setStoredValue(field.value);
             field.onChange("randomize"); // Set the input value to "randomize"
+        } else {
+            // Restore the saved value when reactivating the input
+            field.onChange(storedValue);
         }
     };
 
@@ -307,8 +314,14 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                         {...field}
                         type="number"
                         disabled={isRandomized} // Disable input if checkbox is checked
-                        value={isRandomized ? "randomize" : field.value} // Set value to "randomize" if checkbox is checked
-                        onChange={(e) => !isRandomized && field.onChange(e.target.value)} // Prevent changes if randomized
+                        value={isRandomized ? "randomize" : field.value} // Display "randomize" if checkbox is checked
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            if (!isRandomized) {
+                                setStoredValue(value); // Update stored value when input changes
+                                field.onChange(value);
+                            }
+                        }}
                     />
                 </div>
             </FormControl>
