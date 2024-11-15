@@ -88,20 +88,19 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
 
-    const [stats, setStats] = useState<SystemStats | null>(null);
+    // Fonction pour récupérer les données de l'API
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetch("http://comfyui:8188/api/system_stats");
-                console.log(response);
-                const data: SystemStats = await response.json();
-                console.log(data);
-                setStats(data);
+                const response = await fetch('http://192.168.1.132:8188/api/system_stats');
+                const data = await response.json();
+                setStats(data); // On met à jour l'état avec les données de l'API
             } catch (error) {
-                console.error("Failed to fetch system stats:", error);
+                console.error("Erreur lors de la récupération des statistiques du système", error);
             }
         };
-        fetchStats();
+
+        fetchStats(); // On appelle la fonction dès le premier rendu
     }, []);
 
     return (
@@ -142,7 +141,9 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                         <li><strong>PyTorch :</strong> {stats.system.pytorch_version}</li>
                         <li><strong>ComfyUI :</strong> {stats.system.comfyui_version}</li>
                         <li>
-                            <strong>GPU :</strong> {stats.devices[0]?.name} {Math.floor(stats.devices[0]?.vram_total / (1024 ** 3))}G
+                            <strong>GPU :</strong> {stats.devices[0]?.name} <br />
+                            VRAM Total: {Math.round(stats.devices[0]?.vram_total / 1024 / 1024 / 1024)} GB <br />
+                            VRAM Libre: {Math.round(stats.devices[0]?.vram_free / 1024 / 1024 / 1024)} GB
                         </li>
                     </ul>
                 </div>
