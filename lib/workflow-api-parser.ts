@@ -58,7 +58,7 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
                     }
                     break;
                     
-                case 'RandomNoise':
+                case 'RandomNoise2':
                     if (inputs.length > 0) {
                         const input = inputs[0];
                         const title = getTitleFromValue(value.class_type, value);
@@ -104,6 +104,29 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
                     break;
 
                 default:
+
+                    let seed_found = false;
+                    Object.keys(inputs).forEach((key) => {
+                        if(["seed", "noise_seed", "rand_seed"].includes(key) === false) {
+                            return ;
+                        }
+                        seed_found = true;
+                    });
+
+                    if(seed_found === true) {
+                        const input = inputs[key];
+                        const title = getTitleFromValue(value.class_type, value);
+                        input.valueType = "seed";
+                        input.title = title;
+                        input.placeholder = title;
+                        advancedInputs.push({
+                            title: title,
+                            inputs: inputs,
+                            key: `${key}-${value.class_type}`
+                        });
+                        break;
+                    }
+                    
                     if (inputs.length > 0) {
                         advancedInputs.push({
                             title: getTitleFromValue(value.class_type, value),
