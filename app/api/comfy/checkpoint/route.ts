@@ -3,6 +3,7 @@ import path from 'node:path';
 import fs from 'node:fs/promises';
 import { missingViewComfyFileError, viewComfyFileName } from '@/app/constants';
 import { ErrorBase, ErrorResponseFactory, ErrorTypes } from '@/app/models/errors';
+import { ComfyUIService } from '@/app/services/comfyui-service';
 
 const errorResponseFactory = new ErrorResponseFactory();
 
