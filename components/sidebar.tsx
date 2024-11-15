@@ -80,7 +80,7 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
             </nav>
 
             { !isSmallScreen && (
-                <div className="p-4 space-y-2 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-lg shadow-sm">
+                <div className="bottom-0 p-2 bg-background border-t text-sm bg-muted items-center justify-center text-center text-muted-foreground">
                   <ul>
                     <li><strong>Python :</strong> 254654</li>
                     <li><strong>PyTorch :</strong> 25468</li>
