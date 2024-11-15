@@ -20,10 +20,7 @@ export async function GET(request: NextRequest) {
         console.log('success');
         return NextResponse.json({ success: true });
     } catch (error: unknown) {
-        console.log(error)
-        const errorMessage = error instanceof Error ? error.message : String(error);
-        console.log(errorMessage)
-        const existingModels = extractModels(errorMessage);
+        const existingModels = extractModelsFromError(error);
         console.log(existingModels);
         return NextResponse.json({ checkpoints: existingModels });
     }
@@ -32,13 +29,16 @@ export async function GET(request: NextRequest) {
 }
 
 
-// Fonction pour extraire la liste des modèles existants
-function extractModels(input: string): string[] {
-    const match = input.match(/not in \[(.*?)\]/); // Cherche la liste dans "not in [ ... ]"
+// Extrait les modèles existants depuis une erreur de type ComfyWorkflowError
+function extractModelsFromError(error: { errors: string[] }): string[] {
+    const modelError = error.errors.find(err => err.includes('not in'));
+    if (!modelError) {
+        return [];
+    }
+    const match = modelError.match(/not in \[(.*?)\]/); // Cherche la liste dans "not in [ ... ]"
     if (match && match[1]) {
-        // Séparer les modèles par la virgule et nettoyer les guillemets et espaces
         return match[1].split(',').map(model => model.trim().replace(/['"]/g, ''));
     }
-    return []; // Retourne une liste vide si rien n'est trouvé
+    return [];
 }
 
