@@ -29,6 +29,7 @@ import {
     CollapsibleTrigger,
 } from "@/components/ui/collapsible"
 import { useState, useEffect } from "react";
+import { RefreshCw } from "lucide-react"; // Exemple d'icône, remplacez par l'icône que vous utilisez
 
 interface IInputForm extends IInputField {
     id: string;
@@ -267,7 +268,6 @@ function InputFieldToUI(args: { input: IInputForm, field: any, editMode?: boolea
     )
 }
 
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean, remove?: UseFieldArrayRemove, index: number }) {
     const { input, field, editMode, remove, index } = args;
@@ -275,12 +275,13 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
     const [isRandomized, setIsRandomized] = useState(false); // State to manage checkbox behavior
     const [storedValue, setStoredValue] = useState(field.value); // State to preserve input value
 
-    const handleCheckboxChange = (checked: boolean) => {
-        setIsRandomized(checked); // Update the randomized state
-        if (checked) {
+    const toggleRandomize = () => {
+        const newValue = !isRandomized;
+        setIsRandomized(newValue);
+        if (newValue) {
             // Save the current input value before disabling it
             setStoredValue(field.value);
-            field.onChange("randomize"); // Set the input value to "randomize"
+            field.onChange("randomize");
         } else {
             // Restore the saved value when reactivating the input
             field.onChange(storedValue);
@@ -303,12 +304,7 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                 )}
             </FormLabel>
             <FormControl>
-                <div>
-                    randomize{" "}
-                    <Checkbox
-                        checked={isRandomized}
-                        onCheckedChange={handleCheckboxChange} // Handle checkbox change
-                    />
+                <div className="flex items-center space-x-2">
                     <Input
                         placeholder={input.placeholder}
                         {...field}
@@ -322,7 +318,24 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                                 field.onChange(value);
                             }
                         }}
+                        className="flex-1"
                     />
+                    {/* Hidden checkbox */}
+                    <Checkbox
+                        className="hidden"
+                        checked={isRandomized}
+                        onCheckedChange={() => {}}
+                    />
+                    {/* Randomize button */}
+                    <button
+                        type="button"
+                        onClick={toggleRandomize}
+                        className={`p-2 rounded-md ${
+                            isRandomized ? "text-blue-500" : "text-gray-400"
+                        } hover:text-blue-600`}
+                    >
+                        <RefreshCw className="w-5 h-5" />
+                    </button>
                 </div>
             </FormControl>
             {input.helpText !== "Helper Text" && (
