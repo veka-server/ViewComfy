@@ -290,7 +290,7 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                     checked={field.value}
                     onCheckedChange={field.onChange}
                 />
-                <Input placeholder={input.placeholder} {...field} type="number"} />
+                <Input placeholder={input.placeholder} {...field} type="number" />
             </FormControl>
             {(input.helpText !== "Helper Text") && (
                 <FormDescription>
