@@ -82,10 +82,10 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
             { !isSmallScreen && (
                 <div className="p-4 space-y-2 text-sm text-gray-600 bg-gray-100 border border-gray-300 rounded-lg shadow-sm">
                   <ul>
-                    <li><strong>Python Version:</strong> 254654</li>
-                    <li><strong>PyTorch Version:</strong> 25468</li>
-                    <li><strong>ComfyUI Version:</strong> 54654</li>
-                    <li><strong>GPU:</strong> Nvidia 3060 12G</li>
+                    <li><strong>Python :</strong> 254654</li>
+                    <li><strong>PyTorch :</strong> 25468</li>
+                    <li><strong>ComfyUI :</strong> 54654</li>
+                    <li><strong>GPU :</strong> Nvidia 3060 12G</li>
                   </ul>
                 </div>
             )}
