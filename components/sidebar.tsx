@@ -79,19 +79,17 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                 )}
             </nav>
 
-            {systemStats && (
-                <div className="p-2 space-y-2 text-sm text-gray-600">
-                  <h3 className="font-semibold">System Stats</h3>
-                  <ul>
-                    <li><strong>OS:</strong> Posix</li>
-                    <li><strong>Python Version:</strong> 254654</li>
-                    <li><strong>ComfyUI Version:</strong> 54654</li>
-                    <li><strong>RAM:</strong> 10/16</li>
-                    <li><strong>PyTorch Version:</strong> 25468</li>
-                    <li><strong>GPU:</strong> dfhgh5sdf64f5g</li>
-                  </ul>
-                </div>
-            )}
+            <div className="p-2 space-y-2 text-sm text-gray-600">
+              <h3 className="font-semibold">System Stats</h3>
+              <ul>
+                <li><strong>OS:</strong> Posix</li>
+                <li><strong>Python Version:</strong> 254654</li>
+                <li><strong>ComfyUI Version:</strong> 54654</li>
+                <li><strong>RAM:</strong> 10/16</li>
+                <li><strong>PyTorch Version:</strong> 25468</li>
+                <li><strong>GPU:</strong> dfhgh5sdf64f5g</li>
+              </ul>
+            </div>
             
             <nav className="sticky bottom-0 p-2 bg-background border-t">
                 <Link href="https://github.com/ViewComfy/ViewComfy" target="_blank" rel="noopener noreferrer">
