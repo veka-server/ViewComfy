@@ -119,14 +119,16 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                 )}
             </nav>
 
-            { !isSmallScreen && (
+            {!isSmallScreen && stats && (
                 <div className="bottom-0 p-2 bg-background border-t text-sm bg-muted items-center justify-center text-center text-muted-foreground">
-                  <ul>
-                    <li><strong>Python :</strong> 254654</li>
-                    <li><strong>PyTorch :</strong> 25468</li>
-                    <li><strong>ComfyUI :</strong> 54654</li>
-                    <li><strong>GPU :</strong> Nvidia 3060 12G</li>
-                  </ul>
+                    <ul>
+                        <li><strong>Python :</strong> {stats.system.python_version}</li>
+                        <li><strong>PyTorch :</strong> {stats.system.pytorch_version}</li>
+                        <li><strong>ComfyUI :</strong> {stats.system.comfyui_version}</li>
+                        <li>
+                            <strong>GPU :</strong> {stats.devices[0]?.name} {Math.floor(stats.devices[0]?.vram_total / (1024 ** 3))}G
+                        </li>
+                    </ul>
                 </div>
             )}
             
