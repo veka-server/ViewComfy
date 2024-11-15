@@ -286,11 +286,13 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                 )}
             </FormLabel>
             <FormControl>
-                randomize <Checkbox
-                    checked={field.value}
-                    onCheckedChange={field.onChange}
-                />
-                <Input placeholder={input.placeholder} {...field} type="number" />
+                <div>
+                    randomize <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                    />
+                    <Input placeholder={input.placeholder} {...field} type="number" />                
+                </div>
             </FormControl>
             {(input.helpText !== "Helper Text") && (
                 <FormDescription>
