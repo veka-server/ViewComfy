@@ -34,5 +34,3 @@ console.log('new page')
         });
     }
 }
-
-}
