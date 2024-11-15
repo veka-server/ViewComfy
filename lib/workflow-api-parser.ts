@@ -105,7 +105,8 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
 
                 default:
 
-                    Object.keys(value.inputs).forEach((key) => {
+                    Object.keys(inputs).forEach((key) => {
+                    console.log(inputs[key])
                         if(["seed", "noise_seed", "rand_seed"].includes(inputs[key].title)) {
                             inputs[key].valueType = "seed";
                         }
