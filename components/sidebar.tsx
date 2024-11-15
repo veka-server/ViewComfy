@@ -84,12 +84,10 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                 <div className="p-2 space-y-2 text-sm text-gray-600">
                   <h3 className="font-semibold">System Stats</h3>
                   <ul>
-                    <li><strong>OS:</strong> Posix</li>
                     <li><strong>Python Version:</strong> 254654</li>
-                    <li><strong>ComfyUI Version:</strong> 54654</li>
-                    <li><strong>RAM:</strong> 10/16</li>
                     <li><strong>PyTorch Version:</strong> 25468</li>
-                    <li><strong>GPU:</strong> dfhgh5sdf64f5g</li>
+                    <li><strong>ComfyUI Version:</strong> 54654</li>
+                    <li><strong>GPU:</strong> Nvidia 3060 12G</li>
                   </ul>
                 </div>
             )}
