@@ -94,6 +94,7 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     useEffect(() => {
         const fetchStats = async () => {
             try {
+                console.log('kljhklhjklhlkjhlkjhkljhklhjklh')
                 const response = await fetch('http://comfyui:8188/api/system_stats');
                 const data = await response.json();
                 setStats(data); // On met à jour l'état avec les données de l'API
