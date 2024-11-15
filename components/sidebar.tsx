@@ -88,6 +88,8 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
 
+    const [stats, setStats] = useState<any>(null); // stats est initialisé à `null`
+
     // Fonction pour récupérer les données de l'API
     useEffect(() => {
         const fetchStats = async () => {
@@ -134,7 +136,8 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                 )}
             </nav>
 
-            {!isSmallScreen && stats && (
+            {/* Vérification de l'état `stats` avant d'afficher les informations */}
+            {!isSmallScreen && stats && stats.system && stats.devices && stats.devices[0] && (
                 <div className="bottom-0 p-2 bg-background border-t text-sm bg-muted items-center justify-center text-center text-muted-foreground">
                     <ul>
                         <li><strong>Python :</strong> {stats.system.python_version}</li>
