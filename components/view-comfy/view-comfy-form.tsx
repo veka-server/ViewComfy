@@ -271,9 +271,19 @@ function InputFieldToUI(args: { input: IInputForm, field: any, editMode?: boolea
 function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean, remove?: UseFieldArrayRemove, index: number }) {
     const { input, field, editMode, remove, index } = args;
 
+    const [isRandomized, setIsRandomized] = useState(false); // State to manage checkbox and input behavior
+
+    const handleCheckboxChange = (checked: boolean) => {
+        setIsRandomized(checked); // Update state
+        if (checked) {
+            field.onChange("randomize"); // Set the input value to "randomize"
+        }
+    };
+
     return (
         <FormItem key={input.id}>
-            <FormLabel className={FORM_STYLE.label}>{input.title}
+            <FormLabel className={FORM_STYLE.label}>
+                {input.title}
                 {editMode && (
                     <Button
                         size="icon"
@@ -287,20 +297,28 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
             </FormLabel>
             <FormControl>
                 <div>
-                    randomize <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
+                    randomize{" "}
+                    <Checkbox
+                        checked={isRandomized}
+                        onCheckedChange={handleCheckboxChange} // Handle checkbox change
                     />
-                    <Input placeholder={input.placeholder} {...field} type="number" />                
+                    <Input
+                        placeholder={input.placeholder}
+                        {...field}
+                        type="number"
+                        disabled={isRandomized} // Disable input if checkbox is checked
+                        value={isRandomized ? "randomize" : field.value} // Set value to "randomize" if checkbox is checked
+                        onChange={(e) => !isRandomized && field.onChange(e.target.value)} // Prevent changes if randomized
+                    />
                 </div>
             </FormControl>
-            {(input.helpText !== "Helper Text") && (
+            {input.helpText !== "Helper Text" && (
                 <FormDescription>
                     {input.helpText}
                 </FormDescription>
             )}
         </FormItem>
-    )
+    );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
