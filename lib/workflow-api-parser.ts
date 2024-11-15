@@ -65,7 +65,7 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
                         input.valueType = "seed";
                         input.title = title;
                         input.placeholder = title;
-                        basicInputs.push({
+                        advancedInputs.push({
                             title: title,
                             inputs: inputs,
                             key: `${key}-${value.class_type}`
