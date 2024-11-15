@@ -92,8 +92,9 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetchSystemStats();
-                setStats(response);
+                const response = await fetch("http://192.168.1.132:8188/api/system_stats");
+                const data: SystemStats = await response.json();
+                setStats(data);
             } catch (error) {
                 console.error("Failed to fetch system stats:", error);
             }
