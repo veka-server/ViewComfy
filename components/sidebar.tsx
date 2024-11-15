@@ -92,7 +92,7 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                const response = await fetch('/api/systemStats');
+                const response = await fetch('/api/comfy/systemStats');
                 const data = await response.json();
                 setStats(data);
             } catch (error) {
