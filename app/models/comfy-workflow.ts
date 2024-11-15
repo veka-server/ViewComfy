@@ -56,7 +56,10 @@ export class ComfyWorkflow {
                 case "RandomNoise":
                 default:
                     Object.keys(node.inputs).forEach((key) => {
-                        if(["seed", "noise_seed", "rand_seed"].includes(key) && node.inputs[key]?.replace(/\s/g, "").toLowerCase() == 'randomize') {
+                        if(
+                            ["seed", "noise_seed", "rand_seed"].includes(key) 
+                            && typeof node.inputs[key] === 'string'
+                            && node.inputs[key]?.replace(/\s/g, "").toLowerCase() == 'randomize') {
                             node.inputs[key] = newSeed; 
                         }                        
                     });
