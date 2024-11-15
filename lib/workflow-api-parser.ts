@@ -58,21 +58,6 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
                     }
                     break;
                     
-                case 'RandomNoise2':
-                    if (inputs.length > 0) {
-                        const input = inputs[0];
-                        const title = getTitleFromValue(value.class_type, value);
-                        input.valueType = "seed";
-                        input.title = title;
-                        input.placeholder = title;
-                        advancedInputs.push({
-                            title: title,
-                            inputs: inputs,
-                            key: `${key}-${value.class_type}`
-                        });
-                    }
-                    break;
-
                 case "LoadImage":
                 case "LoadImageMask":
                     const uploadInput = inputs.find(input => input.title === "Upload");
@@ -106,9 +91,12 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
                 default:
 
                     Object.keys(inputs).forEach((key) => {
-                    console.log(inputs[key])
-                        if(["seed", "noise_seed", "rand_seed"].includes(inputs[key].title.toLowerCase())) {
-                            inputs[key].valueType = "seed";
+                        switch(inputs[key].title.toLowerCase()) {
+                            case "seed":
+                            case "noise_seed":
+                            case "rand_seed":
+                                inputs[key].valueType = "seed";
+                                break;
                         }
                     });
                    
