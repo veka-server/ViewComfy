@@ -56,6 +56,9 @@ export class ComfyWorkflow {
                 case "RandomNoise":
                 default:
                     Object.keys(node.inputs).forEach((key) => {
+
+                        console.log(node.inputs[key])
+                        console.log(typeof node.inputs[key])
                         if(
                             ["seed", "noise_seed", "rand_seed"].includes(key) 
                             && typeof node.inputs[key] === 'string'
