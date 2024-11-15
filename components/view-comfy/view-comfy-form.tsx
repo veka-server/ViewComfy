@@ -255,11 +255,49 @@ function InputFieldToUI(args: { input: IInputForm, field: any, editMode?: boolea
             <FormMediaInput input={input} field={field} editMode={editMode} remove={remove} index={index} />
         )
     }
-
-    console.log(input)
+    
+    if (input.valueType === "seed" ) {
+        return (
+            <FormSeedInput input={input} field={field} editMode={editMode} remove={remove} index={index} />
+        )
+    }
 
     return (
         <FormBasicInput input={input} field={field} editMode={editMode} remove={remove} index={index} />
+    )
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean, remove?: UseFieldArrayRemove, index: number }) {
+    const { input, field, editMode, remove, index } = args;
+
+    return (
+        <FormItem key={input.id}>
+            <FormLabel className={FORM_STYLE.label}>{input.title}
+                {editMode && (
+                    <Button
+                        size="icon"
+                        variant="ghost"
+                        className="text-muted-foreground"
+                        onClick={remove ? () => remove(index) : undefined}
+                    >
+                        <Trash2 className="size-5" />
+                    </Button>
+                )}
+            </FormLabel>
+            <FormControl>
+                randomize <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                />
+                <Input placeholder={input.placeholder} {...field} type="number"} />
+            </FormControl>
+            {(input.helpText !== "Helper Text") && (
+                <FormDescription>
+                    {input.helpText}
+                </FormDescription>
+            )}
+        </FormItem>
     )
 }
 
