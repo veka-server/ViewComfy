@@ -20,7 +20,9 @@ export async function GET(request: NextRequest) {
         console.log('success');
         return NextResponse.json({ success: true });
     } catch (error: unknown) {
+        console.log(error)
         const errorMessage = error instanceof Error ? error.message : String(error);
+        console.log(errorMessage)
         const existingModels = extractModels(errorMessage);
         console.log(existingModels);
         return NextResponse.json({ checkpoints: existingModels });
