@@ -19,6 +19,45 @@ interface SidebarProps {
     currentTab: TabValue;
     onTabChange: (tab: TabValue) => void;
 }
+type SystemStats = {
+    system: {
+        os: string;
+        ram_total: number;
+        ram_free: number;
+        comfyui_version: string;
+        python_version: string;
+        pytorch_version: string;
+        embedded_python: boolean;
+        argv: string[];
+    };
+    devices: {
+        name: string;
+        type: string;
+        index: number;
+        vram_total: number;
+        vram_free: number;
+        torch_vram_total: number;
+        torch_vram_free: number;
+    }[];
+};
+
+async function fetchSystemStats(): Promise<SystemStats> {
+    const apiUrl = "http://comfyui:8188/api/system_stats";
+
+    try {
+        const response = await fetch(apiUrl);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data: SystemStats = await response.json();
+        return data;
+    } catch (error) {
+        console.error("Failed to fetch system stats:", error);
+        throw error;
+    }
+}
 
 const SidebarButton = ({ icon, label, isActive, onClick, isSmallScreen }: { icon: React.ReactNode, label: string, isActive: boolean, onClick: () => void, isSmallScreen: boolean }) => {
     if (isSmallScreen) {
@@ -47,7 +86,8 @@ const SidebarButton = ({ icon, label, isActive, onClick, isSmallScreen }: { icon
 export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
-
+        const stats = await fetchSystemStats();
+        console.log("System Stats:", stats);
     return (
         <aside className={`flex flex-col h-full overflow-y-auto border-r bg-background transition-all duration-300 ${isSmallScreen ? 'w-12' : 'w-48'}`}>
             <nav className="flex-grow space-y-2 p-2">
