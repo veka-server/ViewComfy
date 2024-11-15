@@ -20,9 +20,9 @@ export async function GET(request: NextRequest) {
         console.log('success')
 
     } catch (error: unknown) {
-
-        console.log(error)
-    
+        const existingModels = extractModels(error);
+        console.log(existingModels);   
+        return NextResponse.json({ checkpoints: existingModels });
     }
 console.log('new page')
       
@@ -47,4 +47,15 @@ console.log('new page')
             status: 500,
         });
     }
+}
+
+
+// Fonction pour extraire la liste des modèles existants
+function extractModels(input: string): string[] {
+    const match = input.match(/not in \[(.*?)\]/); // Cherche la liste dans "not in [ ... ]"
+    if (match && match[1]) {
+        // Séparer les modèles par la virgule et nettoyer les guillemets et espaces
+        return match[1].split(',').map(model => model.trim().replace(/['"]/g, ''));
+    }
+    return []; // Retourne une liste vide si rien n'est trouvé
 }
