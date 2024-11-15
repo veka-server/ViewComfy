@@ -82,7 +82,6 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
             {isSmallScreen ? ( ) : (
             
                 <div className="p-2 space-y-2 text-sm text-gray-600">
-                  <h3 className="font-semibold">System Stats</h3>
                   <ul>
                     <li><strong>Python Version:</strong> 254654</li>
                     <li><strong>PyTorch Version:</strong> 25468</li>
