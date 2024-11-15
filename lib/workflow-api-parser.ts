@@ -105,8 +105,10 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
 
                 default:
 
+                    console.log(inputs)
                     let seed_found = false;
                     Object.keys(inputs).forEach((key) => {
+                        console.log(key)
                         if(["seed", "noise_seed", "rand_seed"].includes(key) === false) {
                             return ;
                         }
