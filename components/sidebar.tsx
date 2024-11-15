@@ -88,22 +88,18 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
 
-    const [stats, setStats] = useState<any>(null); // stats est initialisé à `null`
-
-    // Fonction pour récupérer les données de l'API
+    const [stats, setStats] = useState<any>(null);
     useEffect(() => {
         const fetchStats = async () => {
             try {
-                console.log('kljhklhjklhlkjhlkjhkljhklhjklh')
-                const response = await fetch('http://comfyui:8188/api/system_stats');
+                const response = await fetch('/api/systemStats');
                 const data = await response.json();
-                setStats(data); // On met à jour l'état avec les données de l'API
+                setStats(data);
             } catch (error) {
                 console.error("Erreur lors de la récupération des statistiques du système", error);
             }
         };
-
-        fetchStats(); // On appelle la fonction dès le premier rendu
+        fetchStats();
     }, []);
 
     return (
