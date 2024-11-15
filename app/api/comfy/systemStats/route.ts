@@ -14,15 +14,17 @@ export async function GET(request: NextRequest) {
         // Effectuer la requête vers ton API externe
         const response = await fetch('http://comfyui:8188/api/system_stats');
         if (!response.ok) {
-          return res.status(response.status).json({ error: 'Failed to fetch system stats' });
+          return NextResponse.json({ error: 'Failed to fetch system stats' });
         }
     
         const data = await response.json(); // On parse la réponse JSON
-        res.status(200).json(data); // On renvoie les données au client
+        return NextResponse.json(data);
           
     } catch (error: unknown) {
-        console.error('Erreur lors de la récupération des statistiques du système:', error);
-        res.status(500).json({ error: 'Erreur interne du serveur' });
+        const responseError = errorResponseFactory.getErrorResponse(error);
+        return NextResponse.json(responseError, {
+            status: 500,
+        });
     }
     
 }
