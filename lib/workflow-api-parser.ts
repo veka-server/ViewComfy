@@ -105,30 +105,12 @@ export function workflowAPItoViewComfy(source: WorkflowApiJSON): IViewComfyBase 
 
                 default:
 
-                    console.log(value)
-                    let seed_found = false;
                     Object.keys(value.inputs).forEach((key) => {
-                        console.log(key)
-                        if(["seed", "noise_seed", "rand_seed"].includes(key) === false) {
-                            return ;
+                        if(["seed", "noise_seed", "rand_seed"].includes(inputs[key].title)) {
+                            inputs[key].valueType = "seed";
                         }
-                        seed_found = true;
                     });
-
-                    if(seed_found === true) {
-                        const input = inputs[key];
-                        const title = getTitleFromValue(value.class_type, value);
-                        input.valueType = "seed";
-                        input.title = title;
-                        input.placeholder = title;
-                        advancedInputs.push({
-                            title: title,
-                            inputs: inputs,
-                            key: `${key}-${value.class_type}`
-                        });
-                        break;
-                    }
-                    
+                   
                     if (inputs.length > 0) {
                         advancedInputs.push({
                             title: getTitleFromValue(value.class_type, value),
