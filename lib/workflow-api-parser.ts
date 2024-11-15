@@ -144,7 +144,7 @@ function parseValueType(value: any): InputValueType {
             if (value.toString().indexOf('.') !== -1) {
                 return 'float';
             }
-            return 'number';
+            return 'string';
         case 'bigint':
             return 'bigint';
         case 'boolean':
