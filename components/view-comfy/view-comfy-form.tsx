@@ -329,6 +329,7 @@ function FormSeedInput(args: { input: IInputForm, field: any, editMode?: boolean
                     {/* Randomize button */}
                     <button
                         type="button"
+                        title={isRandomized ? "Disable randomization" : "Enable randomization"}
                         onClick={toggleRandomize}
                         className={`p-2 rounded-md ${
                             isRandomized ? "text-blue-500" : "text-gray-400"
