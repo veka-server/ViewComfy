@@ -80,7 +80,6 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
             </nav>
 
             {isSmallScreen ? ( ) : (
-            
                 <div className="p-2 space-y-2 text-sm text-gray-600">
                   <ul>
                     <li><strong>Python Version:</strong> 254654</li>
