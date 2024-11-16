@@ -4,6 +4,8 @@ import { TooltipButton } from "@/components/ui/tooltip-button"
 import Link from "next/link";
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { useState, useEffect } from "react";
+import { Modal } from "./Modal"; // Assumez que vous avez un composant Modal
+import { useMediaQuery } from "../hooks/useMediaQuery";
 
 export enum TabValue {
     Playground = 'playground',
@@ -84,11 +86,14 @@ const SidebarButton = ({ icon, label, isActive, onClick, isSmallScreen }: { icon
     )
 }
 
+
 export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
     const viewMode = process.env.NEXT_PUBLIC_VIEW_MODE === "true";
     const isSmallScreen = useMediaQuery("(max-width: 1024px)");
 
     const [stats, setStats] = useState<any>(null);
+    const [isModalOpen, setModalOpen] = useState(false);
+
     useEffect(() => {
         const fetchStats = async () => {
             try {
@@ -101,6 +106,9 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
         };
         fetchStats();
     }, []);
+
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
 
     return (
         <aside className={`flex flex-col h-full overflow-y-auto border-r bg-background transition-all duration-300 ${isSmallScreen ? 'w-12' : 'w-48'}`}>
@@ -133,18 +141,15 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                 )}
             </nav>
 
-            {/* Vérification de l'état `stats` avant d'afficher les informations */}
-            {!isSmallScreen && stats && stats.system && stats.devices && stats.devices[0] && (
-                <div className="bottom-0 p-2 bg-background border-t text-sm bg-muted items-center justify-center text-center text-muted-foreground">
-                    <ul>
-                        <li><strong>Python :</strong> {stats.system.python_version}</li>
-                        <li><strong>PyTorch :</strong> {stats.system.pytorch_version}</li>
-                        <li><strong>ComfyUI :</strong> {stats.system.comfyui_version}</li>
-                        <li><strong>GPU :</strong> {stats.devices[0]?.name}</li>
-                    </ul>
+            {/* Bouton pour ouvrir la popin */}
+            {!isSmallScreen && stats && (
+                <div className="p-2">
+                    <Button onClick={handleModalOpen} variant="outline" className="w-full">
+                        Voir les statistiques
+                    </Button>
                 </div>
             )}
-            
+
             <nav className="sticky bottom-0 p-2 bg-background border-t">
                 <Link href="https://github.com/ViewComfy/ViewComfy" target="_blank" rel="noopener noreferrer">
                     {isSmallScreen ? (
@@ -162,6 +167,24 @@ export function Sidebar({ currentTab, onTabChange }: SidebarProps) {
                     )}
                 </Link>
             </nav>
+
+            {/* Popin affichant les statistiques */}
+            <Modal isOpen={isModalOpen} onClose={handleModalClose}>
+                <div className="p-4">
+                    <h2 className="text-lg font-bold mb-4">Statistiques système</h2>
+                    {stats && stats.system && stats.devices && stats.devices[0] ? (
+                        <ul>
+                            <li><strong>Python :</strong> {stats.system.python_version}</li>
+                            <li><strong>PyTorch :</strong> {stats.system.pytorch_version}</li>
+                            <li><strong>ComfyUI :</strong> {stats.system.comfyui_version}</li>
+                            <li><strong>GPU :</strong> {stats.devices[0]?.name}</li>
+                        </ul>
+                    ) : (
+                        <p>Aucune donnée disponible</p>
+                    )}
+                    <Button onClick={handleModalClose} className="mt-4">Fermer</Button>
+                </div>
+            </Modal>
         </aside>
-    )
+    );
 }
